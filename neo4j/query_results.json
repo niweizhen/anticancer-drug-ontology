@@ -1,0 +1,948 @@
+[
+ {
+  "id": "Q1",
+  "title": "图谱规模：节点类型分布",
+  "note": "MATCH (n) 不限定标签，匹配全图所有节点；labels(n)[0] 取节点主标签，count(n) 聚合计数，\n用来快速核对本体类是否都落成了节点标签。",
+  "cypher": "MATCH (n) RETURN labels(n)[0] AS 节点类型, count(n) AS 数量 ORDER BY 数量 DESC",
+  "raw": "节点类型, 数量\r\n\"Drug\", 8\r\n\"Company\", 5\r\n\"Region\", 5\r\n\"Disease\", 4\r\n\"PriceRecord\", 4\r\n\"AdverseReaction\", 3\r\n\"Negotiation\", 3\r\n\"Evidence\", 3\r\n\"Listing\", 2\r\n\"Agency\", 1",
+  "header": [
+   "节点类型",
+   "数量"
+  ],
+  "rows": [
+   [
+    "Drug",
+    "8"
+   ],
+   [
+    "Company",
+    "5"
+   ],
+   [
+    "Region",
+    "5"
+   ],
+   [
+    "Disease",
+    "4"
+   ],
+   [
+    "PriceRecord",
+    "4"
+   ],
+   [
+    "AdverseReaction",
+    "3"
+   ],
+   [
+    "Negotiation",
+    "3"
+   ],
+   [
+    "Evidence",
+    "3"
+   ],
+   [
+    "Listing",
+    "2"
+   ],
+   [
+    "Agency",
+    "1"
+   ]
+  ]
+ },
+ {
+  "id": "Q2",
+  "title": "图谱规模：关系类型分布",
+  "note": "MATCH ()-[r]->() 匹配所有关系（两端节点用匿名占位），type(r) 返回关系类型，\n对应本体的 14 个对象属性（其中联合用药为对称关系，双向各存一条）。",
+  "cypher": "MATCH ()-[r]->() RETURN type(r) AS 关系类型, count(r) AS 数量 ORDER BY 数量 DESC",
+  "raw": "关系类型, 数量\r\n\"INDICATED_FOR\", 8\r\n\"MANUFACTURED_BY\", 7\r\n\"CAUSES\", 6\r\n\"NEGOTIATED\", 6\r\n\"PARTICIPATED_IN\", 4\r\n\"LISTED_IN\", 4\r\n\"HAS_PRICE\", 4\r\n\"PART_OF\", 4\r\n\"ORGANIZED_BY\", 3\r\n\"SUPPORTED_BY\", 3\r\n\"EVALUATES\", 3\r\n\"COMBINED_WITH\", 2\r\n\"COVERS\", 2\r\n\"TREATS\", 1",
+  "header": [
+   "关系类型",
+   "数量"
+  ],
+  "rows": [
+   [
+    "INDICATED_FOR",
+    "8"
+   ],
+   [
+    "MANUFACTURED_BY",
+    "7"
+   ],
+   [
+    "CAUSES",
+    "6"
+   ],
+   [
+    "NEGOTIATED",
+    "6"
+   ],
+   [
+    "PARTICIPATED_IN",
+    "4"
+   ],
+   [
+    "LISTED_IN",
+    "4"
+   ],
+   [
+    "HAS_PRICE",
+    "4"
+   ],
+   [
+    "PART_OF",
+    "4"
+   ],
+   [
+    "ORGANIZED_BY",
+    "3"
+   ],
+   [
+    "SUPPORTED_BY",
+    "3"
+   ],
+   [
+    "EVALUATES",
+    "3"
+   ],
+   [
+    "COMBINED_WITH",
+    "2"
+   ],
+   [
+    "COVERS",
+    "2"
+   ],
+   [
+    "TREATS",
+    "1"
+   ]
+  ]
+ },
+ {
+  "id": "Q3",
+  "title": "全图预览：MATCH (n) RETURN n",
+  "note": "最基础的图浏览语句，直接返回节点对象，Neo4j Browser 里会渲染成图形。\nLIMIT 25 防止一次拉取过多节点影响渲染性能。",
+  "cypher": "MATCH (n) RETURN n LIMIT 25",
+  "raw": "n\r\n(:Company {name: \"默沙东\", founded: 1891, id: \"msd\", type: \"外资药企\"})\r\n(:Company {name: \"信达生物\", founded: 2011, id: \"innovent\", type: \"本土创新药企\"})\r\n(:Company {name: \"阿斯利康\", founded: 1999, id: \"astrazeneca\", type: \"外资药企\"})\r\n(:Company {name: \"罗氏\", founded: 1896, id: \"roche\", type: \"外资药企\"})\r\n(:Company {name: \"恒瑞医药\", founded: 1970, id: \"hengrui\", type: \"本土药企\"})\r\n(:Agency {name: \"国家医疗保障局\", id: \"nhsa\"})\r\n(:Disease {name: \"非小细胞肺癌\", survival5y: 0.26, icd: \"C34.9\", id: \"nsclc\"})\r\n(:Disease {name: \"乳腺癌\", survival5y: 0.83, icd: \"C50\", id: \"breast_cancer\"})\r\n(:Disease {name: \"结直肠癌\", survival5y: 0.65, icd: \"C18\", id: \"crc\"})\r\n(:Disease {name: \"肝细胞癌\", survival5y: 0.14, icd: \"C22.0\", id: \"hcc\"})\r\n(:AdverseReaction {name: \"免疫相关性肺炎\", id: \"ir_ae\"})\r\n(:AdverseReaction {name: \"中性粒细胞减少症\", id: \"neutropenia\"})\r\n(:AdverseReaction {name: \"化疗相关恶心呕吐\", id: \"cinv\"})\r\n(:Drug {domestic: FALSE, annualCost: 320000, launchYear: 2018, form: \"注射剂\", approval: \"国药准字SJ20180019\", name: \"帕博利珠单抗\", id: \"pembrolizumab\", category: \"免疫检查点抑制剂\", brand: \"可瑞达\", spec: \"100mg/4ml\"})\r\n(:Drug {domestic: TRUE, annualCost: 98000, launchYear: 2018, form: \"注射剂\", approval: \"国药准字S20180016\", name: \"信迪利单抗\", id: \"sintilimab\", category: \"免疫检查点抑制剂\", brand: \"达伯舒\", spec: \"100mg/10ml\"})\r\n(:Drug {domestic: FALSE, annualCost: 183600, form: \"片剂\", launchYear: 2017, approval: \"国药准字HJ20170150\", name: \"奥希替尼\", id: \"osimertinib\", category: \"靶向治疗药\", brand: \"泰瑞沙\", spec: \"80mg\"})\r\n(:Drug {domestic: FALSE, annualCost: 165000, launchYear: 2002, form: \"注射剂\", approval: \"国药准字SJ20170046\", name: \"曲妥珠单抗\", id: \"trastuzumab\", category: \"靶向治疗药\", brand: \"赫赛汀\", spec: \"440mg\"})\r\n(:Drug {domestic: FALSE, annualCost: 120000, launchYear: 2010, form: \"注射剂\", approval: \"国药准字SJ20100047\", name: \"贝伐珠单抗\", id: \"bevacizumab\", category: \"靶向治疗药\", brand: \"安维汀\", spec: \"100mg/4ml\"})\r\n(:Drug {domestic: TRUE, annualCost: 60000, launchYear: 2005, form: \"注射剂\", approval: \"国药准字H20051288\", name: \"培美曲塞\", id: \"pemetrexed\", category: \"化学治疗药\", brand: \"力比泰\", spec: \"500mg\"})\r\n(:Drug {domestic: TRUE, annualCost: 72000, launchYear: 2018, form: \"注射剂\", approval: \"国药准字H20183044\", name: \"白蛋白结合型紫杉醇\", id: \"paclitaxel_nab\", category: \"化学治疗药\", brand: \"艾越\", spec: \"100mg\"})\r\n(:Drug {domestic: TRUE, annualCost: 6000, launchYear: 2008, form: \"注射剂\", approval: \"国药准字H20080776\", name: \"帕洛诺司琼\", id: \"palonosetron\", category: \"辅助用药\", brand: \"诺威\", spec: \"0.25mg\"})\r\n(:Negotiation {name: \"2023年国家医保药品目录谈判\", id: \"neg2023\", avgCut: 0.615, round: 6, year: 2023})\r\n(:Negotiation {name: \"2024年国家医保药品目录谈判\", id: \"neg2024\", avgCut: 0.63, round: 7, year: 2024})\r\n(:Negotiation {name: \"第五批国家组织药品集中带量采购\", id: \"vbp5\", avgCut: 0.56, year: 2021})\r\n(:Listing {effective: \"2023-03-01\", version: \"2023年版\", id: \"list2023\"})",
+  "header": [
+   "n"
+  ],
+  "rows": [
+   [
+    "(:Company {name: \"默沙东\"",
+    "founded: 1891",
+    "id: \"msd\"",
+    "type: \"外资药企\"})"
+   ],
+   [
+    "(:Company {name: \"信达生物\"",
+    "founded: 2011",
+    "id: \"innovent\"",
+    "type: \"本土创新药企\"})"
+   ],
+   [
+    "(:Company {name: \"阿斯利康\"",
+    "founded: 1999",
+    "id: \"astrazeneca\"",
+    "type: \"外资药企\"})"
+   ],
+   [
+    "(:Company {name: \"罗氏\"",
+    "founded: 1896",
+    "id: \"roche\"",
+    "type: \"外资药企\"})"
+   ],
+   [
+    "(:Company {name: \"恒瑞医药\"",
+    "founded: 1970",
+    "id: \"hengrui\"",
+    "type: \"本土药企\"})"
+   ],
+   [
+    "(:Agency {name: \"国家医疗保障局\"",
+    "id: \"nhsa\"})"
+   ],
+   [
+    "(:Disease {name: \"非小细胞肺癌\"",
+    "survival5y: 0.26",
+    "icd: \"C34.9\"",
+    "id: \"nsclc\"})"
+   ],
+   [
+    "(:Disease {name: \"乳腺癌\"",
+    "survival5y: 0.83",
+    "icd: \"C50\"",
+    "id: \"breast_cancer\"})"
+   ],
+   [
+    "(:Disease {name: \"结直肠癌\"",
+    "survival5y: 0.65",
+    "icd: \"C18\"",
+    "id: \"crc\"})"
+   ],
+   [
+    "(:Disease {name: \"肝细胞癌\"",
+    "survival5y: 0.14",
+    "icd: \"C22.0\"",
+    "id: \"hcc\"})"
+   ],
+   [
+    "(:AdverseReaction {name: \"免疫相关性肺炎\"",
+    "id: \"ir_ae\"})"
+   ],
+   [
+    "(:AdverseReaction {name: \"中性粒细胞减少症\"",
+    "id: \"neutropenia\"})"
+   ],
+   [
+    "(:AdverseReaction {name: \"化疗相关恶心呕吐\"",
+    "id: \"cinv\"})"
+   ],
+   [
+    "(:Drug {domestic: FALSE",
+    "annualCost: 320000",
+    "launchYear: 2018",
+    "form: \"注射剂\"",
+    "approval: \"国药准字SJ20180019\"",
+    "name: \"帕博利珠单抗\"",
+    "id: \"pembrolizumab\"",
+    "category: \"免疫检查点抑制剂\"",
+    "brand: \"可瑞达\"",
+    "spec: \"100mg/4ml\"})"
+   ],
+   [
+    "(:Drug {domestic: TRUE",
+    "annualCost: 98000",
+    "launchYear: 2018",
+    "form: \"注射剂\"",
+    "approval: \"国药准字S20180016\"",
+    "name: \"信迪利单抗\"",
+    "id: \"sintilimab\"",
+    "category: \"免疫检查点抑制剂\"",
+    "brand: \"达伯舒\"",
+    "spec: \"100mg/10ml\"})"
+   ],
+   [
+    "(:Drug {domestic: FALSE",
+    "annualCost: 183600",
+    "form: \"片剂\"",
+    "launchYear: 2017",
+    "approval: \"国药准字HJ20170150\"",
+    "name: \"奥希替尼\"",
+    "id: \"osimertinib\"",
+    "category: \"靶向治疗药\"",
+    "brand: \"泰瑞沙\"",
+    "spec: \"80mg\"})"
+   ],
+   [
+    "(:Drug {domestic: FALSE",
+    "annualCost: 165000",
+    "launchYear: 2002",
+    "form: \"注射剂\"",
+    "approval: \"国药准字SJ20170046\"",
+    "name: \"曲妥珠单抗\"",
+    "id: \"trastuzumab\"",
+    "category: \"靶向治疗药\"",
+    "brand: \"赫赛汀\"",
+    "spec: \"440mg\"})"
+   ],
+   [
+    "(:Drug {domestic: FALSE",
+    "annualCost: 120000",
+    "launchYear: 2010",
+    "form: \"注射剂\"",
+    "approval: \"国药准字SJ20100047\"",
+    "name: \"贝伐珠单抗\"",
+    "id: \"bevacizumab\"",
+    "category: \"靶向治疗药\"",
+    "brand: \"安维汀\"",
+    "spec: \"100mg/4ml\"})"
+   ],
+   [
+    "(:Drug {domestic: TRUE",
+    "annualCost: 60000",
+    "launchYear: 2005",
+    "form: \"注射剂\"",
+    "approval: \"国药准字H20051288\"",
+    "name: \"培美曲塞\"",
+    "id: \"pemetrexed\"",
+    "category: \"化学治疗药\"",
+    "brand: \"力比泰\"",
+    "spec: \"500mg\"})"
+   ],
+   [
+    "(:Drug {domestic: TRUE",
+    "annualCost: 72000",
+    "launchYear: 2018",
+    "form: \"注射剂\"",
+    "approval: \"国药准字H20183044\"",
+    "name: \"白蛋白结合型紫杉醇\"",
+    "id: \"paclitaxel_nab\"",
+    "category: \"化学治疗药\"",
+    "brand: \"艾越\"",
+    "spec: \"100mg\"})"
+   ],
+   [
+    "(:Drug {domestic: TRUE",
+    "annualCost: 6000",
+    "launchYear: 2008",
+    "form: \"注射剂\"",
+    "approval: \"国药准字H20080776\"",
+    "name: \"帕洛诺司琼\"",
+    "id: \"palonosetron\"",
+    "category: \"辅助用药\"",
+    "brand: \"诺威\"",
+    "spec: \"0.25mg\"})"
+   ],
+   [
+    "(:Negotiation {name: \"2023年国家医保药品目录谈判\"",
+    "id: \"neg2023\"",
+    "avgCut: 0.615",
+    "round: 6",
+    "year: 2023})"
+   ],
+   [
+    "(:Negotiation {name: \"2024年国家医保药品目录谈判\"",
+    "id: \"neg2024\"",
+    "avgCut: 0.63",
+    "round: 7",
+    "year: 2024})"
+   ],
+   [
+    "(:Negotiation {name: \"第五批国家组织药品集中带量采购\"",
+    "id: \"vbp5\"",
+    "avgCut: 0.56",
+    "year: 2021})"
+   ],
+   [
+    "(:Listing {effective: \"2023-03-01\"",
+    "version: \"2023年版\"",
+    "id: \"list2023\"})"
+   ]
+  ]
+ },
+ {
+  "id": "Q4",
+  "title": "节点及其属性：全部抗肿瘤/辅助药品",
+  "note": "限定标签 :Drug，用 n.属性名 投影节点的数据属性；ORDER BY 按年治疗费用降序，\n体现本体的 8 个药品数据属性（商品名、类别、剂型、规格、年费用、是否国产、上市年份等）。",
+  "cypher": "MATCH (n:Drug) RETURN n.name AS 药品, n.brand AS 商品名, n.category AS 类别, n.form AS 剂型, n.spec AS 规格, n.annualCost AS 年治疗费用, n.domestic AS 是否国产, n.launchYear AS 上市年份 ORDER BY n.annualCost DESC",
+  "raw": "药品, 商品名, 类别, 剂型, 规格, 年治疗费用, 是否国产, 上市年份\r\n\"帕博利珠单抗\", \"可瑞达\", \"免疫检查点抑制剂\", \"注射剂\", \"100mg/4ml\", 320000, FALSE, 2018\r\n\"奥希替尼\", \"泰瑞沙\", \"靶向治疗药\", \"片剂\", \"80mg\", 183600, FALSE, 2017\r\n\"曲妥珠单抗\", \"赫赛汀\", \"靶向治疗药\", \"注射剂\", \"440mg\", 165000, FALSE, 2002\r\n\"贝伐珠单抗\", \"安维汀\", \"靶向治疗药\", \"注射剂\", \"100mg/4ml\", 120000, FALSE, 2010\r\n\"信迪利单抗\", \"达伯舒\", \"免疫检查点抑制剂\", \"注射剂\", \"100mg/10ml\", 98000, TRUE, 2018\r\n\"白蛋白结合型紫杉醇\", \"艾越\", \"化学治疗药\", \"注射剂\", \"100mg\", 72000, TRUE, 2018\r\n\"培美曲塞\", \"力比泰\", \"化学治疗药\", \"注射剂\", \"500mg\", 60000, TRUE, 2005\r\n\"帕洛诺司琼\", \"诺威\", \"辅助用药\", \"注射剂\", \"0.25mg\", 6000, TRUE, 2008",
+  "header": [
+   "药品",
+   "商品名",
+   "类别",
+   "剂型",
+   "规格",
+   "年治疗费用",
+   "是否国产",
+   "上市年份"
+  ],
+  "rows": [
+   [
+    "帕博利珠单抗",
+    "可瑞达",
+    "免疫检查点抑制剂",
+    "注射剂",
+    "100mg/4ml",
+    "320000",
+    "FALSE",
+    "2018"
+   ],
+   [
+    "奥希替尼",
+    "泰瑞沙",
+    "靶向治疗药",
+    "片剂",
+    "80mg",
+    "183600",
+    "FALSE",
+    "2017"
+   ],
+   [
+    "曲妥珠单抗",
+    "赫赛汀",
+    "靶向治疗药",
+    "注射剂",
+    "440mg",
+    "165000",
+    "FALSE",
+    "2002"
+   ],
+   [
+    "贝伐珠单抗",
+    "安维汀",
+    "靶向治疗药",
+    "注射剂",
+    "100mg/4ml",
+    "120000",
+    "FALSE",
+    "2010"
+   ],
+   [
+    "信迪利单抗",
+    "达伯舒",
+    "免疫检查点抑制剂",
+    "注射剂",
+    "100mg/10ml",
+    "98000",
+    "TRUE",
+    "2018"
+   ],
+   [
+    "白蛋白结合型紫杉醇",
+    "艾越",
+    "化学治疗药",
+    "注射剂",
+    "100mg",
+    "72000",
+    "TRUE",
+    "2018"
+   ],
+   [
+    "培美曲塞",
+    "力比泰",
+    "化学治疗药",
+    "注射剂",
+    "500mg",
+    "60000",
+    "TRUE",
+    "2005"
+   ],
+   [
+    "帕洛诺司琼",
+    "诺威",
+    "辅助用药",
+    "注射剂",
+    "0.25mg",
+    "6000",
+    "TRUE",
+    "2008"
+   ]
+  ]
+ },
+ {
+  "id": "Q5",
+  "title": "单个节点的完整属性：map 投影 n {.*}",
+  "note": "n {.*} 是 Cypher 的 map 投影语法，一次性取出该节点所有属性，\n适合不确定属性全集时做数据核查；此处查奥希替尼。",
+  "cypher": "MATCH (d:Drug {name:'奥希替尼'}) RETURN d {.*} AS 完整属性",
+  "raw": "完整属性\r\n{domestic: FALSE, annualCost: 183600, form: \"片剂\", launchYear: 2017, approval: \"国药准字HJ20170150\", name: \"奥希替尼\", id: \"osimertinib\", category: \"靶向治疗药\", brand: \"泰瑞沙\", spec: \"80mg\"}",
+  "header": [
+   "完整属性"
+  ],
+  "rows": [
+   [
+    "{domestic: FALSE",
+    "annualCost: 183600",
+    "form: \"片剂\"",
+    "launchYear: 2017",
+    "approval: \"国药准字HJ20170150\"",
+    "name: \"奥希替尼\"",
+    "id: \"osimertinib\"",
+    "category: \"靶向治疗药\"",
+    "brand: \"泰瑞沙\"",
+    "spec: \"80mg\"}"
+   ]
+  ]
+ },
+ {
+  "id": "Q6",
+  "title": "关系及其属性：适应症关系（含治疗线与方案）",
+  "note": "MATCH (d:Drug)-[r:INDICATED_FOR]->(t:Disease) 匹配『药品→疾病』的有向关系，\nr.line、r.regimen 读取关系自身的属性，这是把本体对象属性加上属性值后的图谱化表达。",
+  "cypher": "MATCH (d:Drug)-[r:INDICATED_FOR]->(t:Disease) RETURN d.name AS 药品, type(r) AS 关系类型, t.name AS 疾病, r.line AS 治疗线, r.regimen AS 联合方案 ORDER BY 药品",
+  "raw": "药品, 关系类型, 疾病, 治疗线, 联合方案\r\n\"信迪利单抗\", \"INDICATED_FOR\", \"非小细胞肺癌\", \"一线\", \"联合培美曲塞+铂类\"\r\n\"培美曲塞\", \"INDICATED_FOR\", \"非小细胞肺癌\", \"一线\", \"含铂双药方案\"\r\n\"奥希替尼\", \"INDICATED_FOR\", \"非小细胞肺癌\", \"一线\", NULL\r\n\"帕博利珠单抗\", \"INDICATED_FOR\", \"非小细胞肺癌\", \"一线\", \"联合培美曲塞+铂类\"\r\n\"曲妥珠单抗\", \"INDICATED_FOR\", \"乳腺癌\", \"一线\", NULL\r\n\"白蛋白结合型紫杉醇\", \"INDICATED_FOR\", \"乳腺癌\", \"二线\", NULL\r\n\"贝伐珠单抗\", \"INDICATED_FOR\", \"肝细胞癌\", \"一线\", NULL\r\n\"贝伐珠单抗\", \"INDICATED_FOR\", \"结直肠癌\", \"一线\", NULL",
+  "header": [
+   "药品",
+   "关系类型",
+   "疾病",
+   "治疗线",
+   "联合方案"
+  ],
+  "rows": [
+   [
+    "信迪利单抗",
+    "INDICATED_FOR",
+    "非小细胞肺癌",
+    "一线",
+    "联合培美曲塞+铂类"
+   ],
+   [
+    "培美曲塞",
+    "INDICATED_FOR",
+    "非小细胞肺癌",
+    "一线",
+    "含铂双药方案"
+   ],
+   [
+    "奥希替尼",
+    "INDICATED_FOR",
+    "非小细胞肺癌",
+    "一线",
+    "NULL"
+   ],
+   [
+    "帕博利珠单抗",
+    "INDICATED_FOR",
+    "非小细胞肺癌",
+    "一线",
+    "联合培美曲塞+铂类"
+   ],
+   [
+    "曲妥珠单抗",
+    "INDICATED_FOR",
+    "乳腺癌",
+    "一线",
+    "NULL"
+   ],
+   [
+    "白蛋白结合型紫杉醇",
+    "INDICATED_FOR",
+    "乳腺癌",
+    "二线",
+    "NULL"
+   ],
+   [
+    "贝伐珠单抗",
+    "INDICATED_FOR",
+    "肝细胞癌",
+    "一线",
+    "NULL"
+   ],
+   [
+    "贝伐珠单抗",
+    "INDICATED_FOR",
+    "结直肠癌",
+    "一线",
+    "NULL"
+   ]
+  ]
+ },
+ {
+  "id": "Q7",
+  "title": "关系及其属性：生产关系（含角色）",
+  "note": "MANUFACTURED_BY 关系上带 role 属性（原研厂家/仿制厂家），同时读取企业节点的 type、\n体现『关系属性 + 节点属性』的联合展示。",
+  "cypher": "MATCH (d:Drug)-[r:MANUFACTURED_BY]->(c:Company) RETURN d.name AS 药品, r.role AS 角色, c.name AS 企业, c.type AS 企业类型 ORDER BY 企业",
+  "raw": "药品, 角色, 企业, 企业类型\r\n\"信迪利单抗\", \"原研厂家\", \"信达生物\", \"本土创新药企\"\r\n\"培美曲塞\", \"仿制厂家\", \"恒瑞医药\", \"本土药企\"\r\n\"白蛋白结合型紫杉醇\", \"仿制厂家\", \"恒瑞医药\", \"本土药企\"\r\n\"曲妥珠单抗\", \"原研厂家\", \"罗氏\", \"外资药企\"\r\n\"贝伐珠单抗\", \"原研厂家\", \"罗氏\", \"外资药企\"\r\n\"奥希替尼\", \"原研厂家\", \"阿斯利康\", \"外资药企\"\r\n\"帕博利珠单抗\", \"原研厂家\", \"默沙东\", \"外资药企\"",
+  "header": [
+   "药品",
+   "角色",
+   "企业",
+   "企业类型"
+  ],
+  "rows": [
+   [
+    "信迪利单抗",
+    "原研厂家",
+    "信达生物",
+    "本土创新药企"
+   ],
+   [
+    "培美曲塞",
+    "仿制厂家",
+    "恒瑞医药",
+    "本土药企"
+   ],
+   [
+    "白蛋白结合型紫杉醇",
+    "仿制厂家",
+    "恒瑞医药",
+    "本土药企"
+   ],
+   [
+    "曲妥珠单抗",
+    "原研厂家",
+    "罗氏",
+    "外资药企"
+   ],
+   [
+    "贝伐珠单抗",
+    "原研厂家",
+    "罗氏",
+    "外资药企"
+   ],
+   [
+    "奥希替尼",
+    "原研厂家",
+    "阿斯利康",
+    "外资药企"
+   ],
+   [
+    "帕博利珠单抗",
+    "原研厂家",
+    "默沙东",
+    "外资药企"
+   ]
+  ]
+ },
+ {
+  "id": "Q8",
+  "title": "关系属性过滤：发生率为『高』的不良反应",
+  "note": "WHERE r.incidence = '高' 直接对关系属性做条件过滤，\n说明关系属性可以和节点属性一样参与筛选、排序与聚合。",
+  "cypher": "MATCH (d:Drug)-[r:CAUSES]->(a:AdverseReaction) WHERE r.incidence = '高' RETURN d.name AS 药品, a.name AS 不良反应, r.incidence AS 发生率",
+  "raw": "药品, 不良反应, 发生率\r\n\"白蛋白结合型紫杉醇\", \"中性粒细胞减少症\", \"高\"\r\n\"培美曲塞\", \"化疗相关恶心呕吐\", \"高\"",
+  "header": [
+   "药品",
+   "不良反应",
+   "发生率"
+  ],
+  "rows": [
+   [
+    "白蛋白结合型紫杉醇",
+    "中性粒细胞减少症",
+    "高"
+   ],
+   [
+    "培美曲塞",
+    "化疗相关恶心呕吐",
+    "高"
+   ]
+  ]
+ },
+ {
+  "id": "Q9",
+  "title": "医保谈判结果：关系属性 result / round",
+  "note": "谈判事件→药品的 NEGOTIATED 关系上存有 result（成功/未成功）与 round（轮次），\n可据此区分『进了目录』与『谈了但没进』两类药品，对应本体中的两个定义类。",
+  "cypher": "MATCH (n:Negotiation)-[r:NEGOTIATED]->(d:Drug) RETURN n.name AS 谈判事件, d.name AS 药品, r.result AS 结果, r.round AS 轮次 ORDER BY 结果, 药品",
+  "raw": "谈判事件, 药品, 结果, 轮次\r\n\"2023年国家医保药品目录谈判\", \"信迪利单抗\", \"成功\", 6\r\n\"2023年国家医保药品目录谈判\", \"奥希替尼\", \"成功\", 6\r\n\"2023年国家医保药品目录谈判\", \"曲妥珠单抗\", \"成功\", 6\r\n\"2023年国家医保药品目录谈判\", \"贝伐珠单抗\", \"成功\", 6\r\n\"2024年国家医保药品目录谈判\", \"帕博利珠单抗\", \"未成功\", 7\r\n\"2023年国家医保药品目录谈判\", \"帕博利珠单抗\", \"未成功\", 6",
+  "header": [
+   "谈判事件",
+   "药品",
+   "结果",
+   "轮次"
+  ],
+  "rows": [
+   [
+    "2023年国家医保药品目录谈判",
+    "信迪利单抗",
+    "成功",
+    "6"
+   ],
+   [
+    "2023年国家医保药品目录谈判",
+    "奥希替尼",
+    "成功",
+    "6"
+   ],
+   [
+    "2023年国家医保药品目录谈判",
+    "曲妥珠单抗",
+    "成功",
+    "6"
+   ],
+   [
+    "2023年国家医保药品目录谈判",
+    "贝伐珠单抗",
+    "成功",
+    "6"
+   ],
+   [
+    "2024年国家医保药品目录谈判",
+    "帕博利珠单抗",
+    "未成功",
+    "7"
+   ],
+   [
+    "2023年国家医保药品目录谈判",
+    "帕博利珠单抗",
+    "未成功",
+    "6"
+   ]
+  ]
+ },
+ {
+  "id": "Q10",
+  "title": "价格降幅对比：谈判前后价格与降幅",
+  "note": "round(表达式, 1) 保留一位小数；价格记录作为独立节点挂载，\n关系 HAS_PRICE 上再用 basis、currency 标注计价口径，避免单位歧义。",
+  "cypher": "MATCH (d:Drug)-[h:HAS_PRICE]->(p:PriceRecord) RETURN d.name AS 药品, p.priceBefore AS 谈判前价格, p.priceAfter AS 谈判后价格, round(p.cutRate*100, 1) AS 降幅百分比, h.basis AS 计价单位 ORDER BY 降幅百分比 DESC",
+  "raw": "药品, 谈判前价格, 谈判后价格, 降幅百分比, 计价单位\r\n\"奥希替尼\", 51000, 15300, 70.0, \"盒/月\"\r\n\"曲妥珠单抗\", 24500, 7600, 69.0, \"瓶\"\r\n\"信迪利单抗\", 7838, 2843, 63.7, \"瓶\"\r\n\"贝伐珠单抗\", 5210, 1998, 61.6, \"瓶\"",
+  "header": [
+   "药品",
+   "谈判前价格",
+   "谈判后价格",
+   "降幅百分比",
+   "计价单位"
+  ],
+  "rows": [
+   [
+    "奥希替尼",
+    "51000",
+    "15300",
+    "70.0",
+    "盒/月"
+   ],
+   [
+    "曲妥珠单抗",
+    "24500",
+    "7600",
+    "69.0",
+    "瓶"
+   ],
+   [
+    "信迪利单抗",
+    "7838",
+    "2843",
+    "63.7",
+    "瓶"
+   ],
+   [
+    "贝伐珠单抗",
+    "5210",
+    "1998",
+    "61.6",
+    "瓶"
+   ]
+  ]
+ },
+ {
+  "id": "Q11",
+  "title": "两跳路径：药品→目录→覆盖地区",
+  "note": "沿着 LISTED_IN、COVERS 两条关系做两跳遍历，一次拿到『谁在哪个目录、何时纳入、覆盖到哪』，\n对应本体里 InsuranceListing 作为中介概念的建模价值。",
+  "cypher": "MATCH (d:Drug)-[l:LISTED_IN]->(li:Listing)-[c:COVERS]->(rg:Region) RETURN d.name AS 药品, li.version AS 目录版本, l.since AS 纳入时间, rg.name AS 覆盖地区, c.scope AS 覆盖范围",
+  "raw": "药品, 目录版本, 纳入时间, 覆盖地区, 覆盖范围\r\n\"贝伐珠单抗\", \"2023年版\", \"2023-03-01\", \"中国\", \"全国\"\r\n\"曲妥珠单抗\", \"2023年版\", \"2023-03-01\", \"中国\", \"全国\"\r\n\"奥希替尼\", \"2023年版\", \"2023-03-01\", \"中国\", \"全国\"\r\n\"信迪利单抗\", \"2023年版\", \"2023-03-01\", \"中国\", \"全国\"",
+  "header": [
+   "药品",
+   "目录版本",
+   "纳入时间",
+   "覆盖地区",
+   "覆盖范围"
+  ],
+  "rows": [
+   [
+    "贝伐珠单抗",
+    "2023年版",
+    "2023-03-01",
+    "中国",
+    "全国"
+   ],
+   [
+    "曲妥珠单抗",
+    "2023年版",
+    "2023-03-01",
+    "中国",
+    "全国"
+   ],
+   [
+    "奥希替尼",
+    "2023年版",
+    "2023-03-01",
+    "中国",
+    "全国"
+   ],
+   [
+    "信迪利单抗",
+    "2023年版",
+    "2023-03-01",
+    "中国",
+    "全国"
+   ]
+  ]
+ },
+ {
+  "id": "Q12",
+  "title": "可变长度路径：行政区划的传递关系",
+  "note": "[:PART_OF*1..3] 表示沿 PART_OF 走 1~3 跳。库里只存了『广州市→广东省』『广东省→中国』\n两条直接关系，此处一趟查询就得到『广州市→中国』，与本体中传递属性 hasSubRegion/partOfRegion\n推出的结论一致。",
+  "cypher": "MATCH path = (c:Region {name:'广州市'})-[:PART_OF*1..3]->(p:Region {name:'中国'}) RETURN path",
+  "raw": "path\r\n(:Region {name: \"广州市\", adminCode: \"440100\", id: \"guangzhou\", level: \"地级市\"})-[:PART_OF {type: \"地级市→省\"}]->(:Region {name: \"广东省\", adminCode: \"440000\", id: \"guangdong\", level: \"省级行政区\"})-[:PART_OF {type: \"省→国家\"}]->(:Region {name: \"中国\", adminCode: \"100000\", id: \"china\", level: \"国家\"})",
+  "header": [
+   "path"
+  ],
+  "rows": [
+   [
+    "(:Region {name: \"广州市\"",
+    "adminCode: \"440100\"",
+    "id: \"guangzhou\"",
+    "level: \"地级市\"})-[:PART_OF {type: \"地级市→省\"}]->(:Region {name: \"广东省\"",
+    "adminCode: \"440000\"",
+    "id: \"guangdong\"",
+    "level: \"省级行政区\"})-[:PART_OF {type: \"省→国家\"}]->(:Region {name: \"中国\"",
+    "adminCode: \"100000\"",
+    "id: \"china\"",
+    "level: \"国家\"})"
+   ]
+  ]
+ },
+ {
+  "id": "Q13",
+  "title": "最短路径：企业到疾病的多跳关联",
+  "note": "shortestPath() 求两节点间最短关系链，[*..5] 表示不限关系类型、最多 5 跳，\n用于发现『默沙东』与『非小细胞肺癌』之间的关联链路（企业—药品—适应症）。",
+  "cypher": "MATCH p = shortestPath((c:Company {name:'默沙东'})-[*..5]-(t:Disease {name:'非小细胞肺癌'})) RETURN p",
+  "raw": "p\r\n(:Company {name: \"默沙东\", founded: 1891, id: \"msd\", type: \"外资药企\"})<-[:MANUFACTURED_BY {role: \"原研厂家\"}]-(:Drug {domestic: FALSE, annualCost: 320000, launchYear: 2018, form: \"注射剂\", approval: \"国药准字SJ20180019\", name: \"帕博利珠单抗\", id: \"pembrolizumab\", category: \"免疫检查点抑制剂\", brand: \"可瑞达\", spec: \"100mg/4ml\"})-[:INDICATED_FOR {regimen: \"联合培美曲塞+铂类\", line: \"一线\"}]->(:Disease {name: \"非小细胞肺癌\", survival5y: 0.26, icd: \"C34.9\", id: \"nsclc\"})",
+  "header": [
+   "p"
+  ],
+  "rows": [
+   [
+    "(:Company {name: \"默沙东\"",
+    "founded: 1891",
+    "id: \"msd\"",
+    "type: \"外资药企\"})<-[:MANUFACTURED_BY {role: \"原研厂家\"}]-(:Drug {domestic: FALSE",
+    "annualCost: 320000",
+    "launchYear: 2018",
+    "form: \"注射剂\"",
+    "approval: \"国药准字SJ20180019\"",
+    "name: \"帕博利珠单抗\"",
+    "id: \"pembrolizumab\"",
+    "category: \"免疫检查点抑制剂\"",
+    "brand: \"可瑞达\"",
+    "spec: \"100mg/4ml\"})-[:INDICATED_FOR {regimen: \"联合培美曲塞+铂类\"",
+    "line: \"一线\"}]->(:Disease {name: \"非小细胞肺癌\"",
+    "survival5y: 0.26",
+    "icd: \"C34.9\"",
+    "id: \"nsclc\"})"
+   ]
+  ]
+ },
+ {
+  "id": "Q14",
+  "title": "聚合统计：各企业在研/在售药品数",
+  "note": "count() 与 collect() 组合，按企业分组聚合，collect 把药品名收成列表，\n可直接用于谈判参与方的产品线画像。",
+  "cypher": "MATCH (c:Company)<-[:MANUFACTURED_BY]-(d:Drug) RETURN c.name AS 企业, count(d) AS 药品数量, collect(d.name) AS 药品列表 ORDER BY 药品数量 DESC",
+  "raw": "企业, 药品数量, 药品列表\r\n\"罗氏\", 2, [\"曲妥珠单抗\", \"贝伐珠单抗\"]\r\n\"恒瑞医药\", 2, [\"培美曲塞\", \"白蛋白结合型紫杉醇\"]\r\n\"默沙东\", 1, [\"帕博利珠单抗\"]\r\n\"信达生物\", 1, [\"信迪利单抗\"]\r\n\"阿斯利康\", 1, [\"奥希替尼\"]",
+  "header": [
+   "企业",
+   "药品数量",
+   "药品列表"
+  ],
+  "rows": [
+   [
+    "罗氏",
+    "2",
+    "[\"曲妥珠单抗\"",
+    "贝伐珠单抗]"
+   ],
+   [
+    "恒瑞医药",
+    "2",
+    "[\"培美曲塞\"",
+    "白蛋白结合型紫杉醇]"
+   ],
+   [
+    "默沙东",
+    "1",
+    "[\"帕博利珠单抗\"]"
+   ],
+   [
+    "信达生物",
+    "1",
+    "[\"信迪利单抗\"]"
+   ],
+   [
+    "阿斯利康",
+    "1",
+    "[\"奥希替尼\"]"
+   ]
+  ]
+ },
+ {
+  "id": "Q15",
+  "title": "共同适应症：同类竞品发现",
+  "note": "同一疾病节点被多个药品指向时，两两配对即为潜在竞品；\nWHERE a.name < b.name 用来去掉重复与自配对（字符串比较保证只算一次）。",
+  "cypher": "MATCH (a:Drug)-[:INDICATED_FOR]->(t:Disease)<-[:INDICATED_FOR]-(b:Drug) WHERE a.name < b.name RETURN t.name AS 疾病, a.name AS 药品A, b.name AS 药品B ORDER BY 疾病",
+  "raw": "疾病, 药品A, 药品B\r\n\"乳腺癌\", \"曲妥珠单抗\", \"白蛋白结合型紫杉醇\"\r\n\"非小细胞肺癌\", \"信迪利单抗\", \"培美曲塞\"\r\n\"非小细胞肺癌\", \"培美曲塞\", \"奥希替尼\"\r\n\"非小细胞肺癌\", \"信迪利单抗\", \"奥希替尼\"\r\n\"非小细胞肺癌\", \"培美曲塞\", \"帕博利珠单抗\"\r\n\"非小细胞肺癌\", \"奥希替尼\", \"帕博利珠单抗\"\r\n\"非小细胞肺癌\", \"信迪利单抗\", \"帕博利珠单抗\"",
+  "header": [
+   "疾病",
+   "药品A",
+   "药品B"
+  ],
+  "rows": [
+   [
+    "乳腺癌",
+    "曲妥珠单抗",
+    "白蛋白结合型紫杉醇"
+   ],
+   [
+    "非小细胞肺癌",
+    "信迪利单抗",
+    "培美曲塞"
+   ],
+   [
+    "非小细胞肺癌",
+    "培美曲塞",
+    "奥希替尼"
+   ],
+   [
+    "非小细胞肺癌",
+    "信迪利单抗",
+    "奥希替尼"
+   ],
+   [
+    "非小细胞肺癌",
+    "培美曲塞",
+    "帕博利珠单抗"
+   ],
+   [
+    "非小细胞肺癌",
+    "奥希替尼",
+    "帕博利珠单抗"
+   ],
+   [
+    "非小细胞肺癌",
+    "信迪利单抗",
+    "帕博利珠单抗"
+   ]
+  ]
+ },
+ {
+  "id": "Q16",
+  "title": "证据链：谈判→证据→药品",
+  "note": "三段关系串联，验证『谈判决策有据可依』的建模：SUPPORTED_BY 上的 weight 表示证据权重，\nEVALUATES 上的 endpoint 表示评价终点。",
+  "cypher": "MATCH (n:Negotiation)-[s:SUPPORTED_BY]->(e:Evidence)-[v:EVALUATES]->(d:Drug) RETURN n.name AS 谈判事件, e.name AS 证据, s.weight AS 证据权重, v.endpoint AS 评价终点, d.name AS 药品",
+  "raw": "谈判事件, 证据, 证据权重, 评价终点, 药品\r\n\"2023年国家医保药品目录谈判\", \"KEYNOTE-189 临床试验\", \"高\", \"OS/PFS\", \"帕博利珠单抗\"\r\n\"2023年国家医保药品目录谈判\", \"ORIENT-11 临床试验\", \"高\", \"PFS\", \"信迪利单抗\"\r\n\"2023年国家医保药品目录谈判\", \"信迪利单抗药物经济学评价\", \"中\", \"ICER\", \"信迪利单抗\"",
+  "header": [
+   "谈判事件",
+   "证据",
+   "证据权重",
+   "评价终点",
+   "药品"
+  ],
+  "rows": [
+   [
+    "2023年国家医保药品目录谈判",
+    "KEYNOTE-189 临床试验",
+    "高",
+    "OS/PFS",
+    "帕博利珠单抗"
+   ],
+   [
+    "2023年国家医保药品目录谈判",
+    "ORIENT-11 临床试验",
+    "高",
+    "PFS",
+    "信迪利单抗"
+   ],
+   [
+    "2023年国家医保药品目录谈判",
+    "信迪利单抗药物经济学评价",
+    "中",
+    "ICER",
+    "信迪利单抗"
+   ]
+  ]
+ },
+ {
+  "id": "Q17",
+  "title": "关系属性：联合用药方案",
+  "note": "COMBINED_WITH 在本体中被定义为对称属性，图中双向各存一条，\n关系属性 regimen 记录该组合所属的临床研究/方案。",
+  "cypher": "MATCH (a:Drug)-[r:COMBINED_WITH]->(b:Drug) RETURN a.name AS 药品A, b.name AS 药品B, r.regimen AS 联合方案 ORDER BY 药品A",
+  "raw": "药品A, 药品B, 联合方案\r\n\"帕博利珠单抗\", \"培美曲塞\", \"KEYNOTE-189\"\r\n\"曲妥珠单抗\", \"白蛋白结合型紫杉醇\", \"术后辅助化疗\"",
+  "header": [
+   "药品A",
+   "药品B",
+   "联合方案"
+  ],
+  "rows": [
+   [
+    "帕博利珠单抗",
+    "培美曲塞",
+    "KEYNOTE-189"
+   ],
+   [
+    "曲妥珠单抗",
+    "白蛋白结合型紫杉醇",
+    "术后辅助化疗"
+   ]
+  ]
+ }
+]

@@ -1,0 +1,1031 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.semanticweb.org/bbi/ontologies/2026/11/anticancer-drug-insurance"
+         xmlns="http://www.semanticweb.org/bbi/ontologies/2026/11/anticancer-drug-insurance#">
+
+<owl:Ontology rdf:about="http://www.semanticweb.org/bbi/ontologies/2026/11/anticancer-drug-insurance">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">《抗肿瘤药品与医保谈判》领域本体：覆盖药品分类、适应症、企业、医保谈判事件、目录准入、价格记录、地区覆盖与证据支撑等核心概念，含推理机可推断的定义类。数据为公开报道量级的教学示例，非官方统计口径。</rdfs:comment>
+</owl:Ontology>
+
+<owl:ObjectProperty rdf:about="#manufacturedBy">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#PharmaceuticalCompany"/>
+  <owl:inverseOf rdf:resource="#produces"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">生产于</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品由某制药企业生产。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#produces">
+  <rdfs:domain rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#manufacturedBy"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">生产药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">制药企业生产某药品，是 manufacturedBy 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#indicatedFor">
+  <rdfs:domain rdf:resource="#AnticancerDrug"/>
+  <rdfs:range rdf:resource="#MalignantTumor"/>
+  <owl:inverseOf rdf:resource="#indicatedDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">适用于</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品获批的适应症（肿瘤类型）。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#indicatedDrug">
+  <rdfs:domain rdf:resource="#MalignantTumor"/>
+  <rdfs:range rdf:resource="#AnticancerDrug"/>
+  <owl:inverseOf rdf:resource="#indicatedFor"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">适用药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">某肿瘤类型可使用的药品，是 indicatedFor 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#treats">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#Disease"/>
+  <owl:inverseOf rdf:resource="#treatedBy"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">治疗</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品用于治疗某疾病，包含不良反应的对症处理。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#treatedBy">
+  <rdfs:domain rdf:resource="#Disease"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#treats"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">被治疗于</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">疾病由某药品治疗，是 treats 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#causesAdverseReaction">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#AdverseReaction"/>
+  <owl:inverseOf rdf:resource="#causedByDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">引起不良反应</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品可能导致的不良反应。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#causedByDrug">
+  <rdfs:domain rdf:resource="#AdverseReaction"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#causesAdverseReaction"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">由药品引起</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">不良反应的来源药品，是 causesAdverseReaction 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#combinedWith">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">联合用药</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">两种药品存在联合用药方案，属性为对称属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#participatesIn">
+  <rdfs:domain rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:range rdf:resource="#NegotiationEvent"/>
+  <owl:inverseOf rdf:resource="#hasParticipant"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">参与谈判</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">制药企业作为谈判方参与医保谈判。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasParticipant">
+  <rdfs:domain rdf:resource="#NegotiationEvent"/>
+  <rdfs:range rdf:resource="#PharmaceuticalCompany"/>
+  <owl:inverseOf rdf:resource="#participatesIn"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判参与企业</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">参与某次谈判的企业，是 participatesIn 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#negotiatedDrug">
+  <rdfs:domain rdf:resource="#NegotiationEvent"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#negotiatedIn"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">某次谈判涉及的药品。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#negotiatedIn">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#NegotiationEvent"/>
+  <owl:inverseOf rdf:resource="#negotiatedDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">经谈判于</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品参与的谈判事件，是 negotiatedDrug 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#organizedBy">
+  <rdfs:domain rdf:resource="#NegotiationEvent"/>
+  <rdfs:range rdf:resource="#RegulatoryAgency"/>
+  <owl:inverseOf rdf:resource="#organizes"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">组织方</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判的组织机构。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#organizes">
+  <rdfs:domain rdf:resource="#RegulatoryAgency"/>
+  <rdfs:range rdf:resource="#NegotiationEvent"/>
+  <owl:inverseOf rdf:resource="#organizedBy"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">组织谈判</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">机构组织某次谈判，是 organizedBy 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#listedIn">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#InsuranceListing"/>
+  <owl:inverseOf rdf:resource="#listsDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">纳入目录</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品被纳入某版医保目录，是推理『谈判成功』的关键属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#listsDrug">
+  <rdfs:domain rdf:resource="#InsuranceListing"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#listedIn"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">收录药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">某版目录收录的药品，是 listedIn 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#coversRegion">
+  <rdfs:domain rdf:resource="#InsuranceListing"/>
+  <rdfs:range rdf:resource="#Region"/>
+  <owl:inverseOf rdf:resource="#coveredByListing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">覆盖地区</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">医保目录条目适用的行政区域。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#coveredByListing">
+  <rdfs:domain rdf:resource="#Region"/>
+  <rdfs:range rdf:resource="#InsuranceListing"/>
+  <owl:inverseOf rdf:resource="#coversRegion"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">被目录覆盖</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">地区适用的目录条目，是 coversRegion 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasSubRegion">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:domain rdf:resource="#Region"/>
+  <rdfs:range rdf:resource="#Region"/>
+  <owl:inverseOf rdf:resource="#partOfRegion"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">包含下级地区</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">地区之间的包含关系，属性为传递属性，可推出跨层级包含。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#partOfRegion">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+  <rdfs:domain rdf:resource="#Region"/>
+  <rdfs:range rdf:resource="#Region"/>
+  <owl:inverseOf rdf:resource="#hasSubRegion"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">隶属于地区</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">下级地区隶属上级地区，是 hasSubRegion 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasPriceRecord">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#PriceRecord"/>
+  <owl:inverseOf rdf:resource="#priceOfDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">价格记录</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品对应的价格记录。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#priceOfDrug">
+  <rdfs:domain rdf:resource="#PriceRecord"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#hasPriceRecord"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">价格所属药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">价格记录对应的药品，是 hasPriceRecord 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#supportedBy">
+  <rdfs:domain rdf:resource="#NegotiationEvent"/>
+  <rdfs:range rdf:resource="#Evidence"/>
+  <owl:inverseOf rdf:resource="#supportsNegotiation"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">依据证据</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判决策所依据的临床或经济学证据。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#supportsNegotiation">
+  <rdfs:domain rdf:resource="#Evidence"/>
+  <rdfs:range rdf:resource="#NegotiationEvent"/>
+  <owl:inverseOf rdf:resource="#supportedBy"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">支撑谈判</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">证据支撑的谈判事件，是 supportedBy 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#evaluates">
+  <rdfs:domain rdf:resource="#Evidence"/>
+  <rdfs:range rdf:resource="#Drug"/>
+  <owl:inverseOf rdf:resource="#evaluatedBy"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">评价对象</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">证据所评价的药品。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#evaluatedBy">
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="#Evidence"/>
+  <owl:inverseOf rdf:resource="#evaluates"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">被评价于</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品被某证据评价，是 evaluates 的逆属性。</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#genericName">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">通用名</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品通用名（INN 中文名）。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#brandName">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">商品名</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品的商品名。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#approvalNumber">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">批准文号</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家药监局批准的药品批准文号。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#dosageForm">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">剂型</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂、片剂等剂型。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#specification">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">规格</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品最小包装规格。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#annualTreatmentCost">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">年治疗费用</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">按标准疗程估算的年治疗费用，单位：元。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#isDomestic">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">是否国产</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">true 表示国产药品，false 表示进口药品。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#launchYear">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Drug"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">上市年份</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">在中国获批上市的年份，如 2018。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#companyType">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">企业类型</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">外资药企、本土创新药企等。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#foundedYear">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">成立年份</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">企业成立年份。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#icdCode">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Disease"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ICD编码</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ICD-10 疾病分类编码。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#fiveYearSurvivalRate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#MalignantTumor"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">五年生存率</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0~1 之间的比例。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#negotiationYear">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#NegotiationEvent"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判年份</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判所属公历年份。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#negotiationRound">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#NationalDrugPriceNegotiation"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判轮次</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家医保谈判的轮次序号。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#averagePriceCut">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#NegotiationEvent"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">平均降幅</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">该次谈判的平均价格降幅，0~1 之间。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#priceBefore">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#PriceRecord"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判前价格</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判前的价格，单位：元。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#priceAfter">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#PriceRecord"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判后价格</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判后的价格，单位：元。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#priceCutRate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#PriceRecord"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">价格降幅</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">(前-后)/前，0~1 之间。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#effectiveDate">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#InsuranceListing"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">生效日期</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">目录版本生效日期，格式 YYYY-MM-DD。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#catalogVersion">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#InsuranceListing"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">目录版本</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">如『2023年版』。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#adminCode">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Region"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">行政区划代码</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家统计局行政区划代码。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#evidenceLevel">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Evidence"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">证据等级</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">如 1a、1b 等循证等级。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#publishYear">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Evidence"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">发表年份</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">证据发表或公布年份。</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Drug">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">以预防、治疗、诊断疾病为目的的物质，本体的核心类之一。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#AnticancerDrug">
+  <rdfs:subClassOf rdf:resource="#Drug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">抗肿瘤药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">以抑制肿瘤生长、杀伤肿瘤细胞为主要作用机制的药物。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ChemotherapeuticAgent">
+  <rdfs:subClassOf rdf:resource="#AnticancerDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">化学治疗药</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">细胞毒类抗肿瘤药，作用于 DNA 或细胞分裂过程。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#TargetedTherapyAgent">
+  <rdfs:subClassOf rdf:resource="#AnticancerDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">靶向治疗药</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">作用于特定分子靶点（如 EGFR、HER2、VEGF）的抗肿瘤药。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ImmuneCheckpointInhibitor">
+  <rdfs:subClassOf rdf:resource="#AnticancerDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">免疫检查点抑制剂</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PD-1/PD-L1/CTLA-4 等免疫检查点抑制剂，激活 T 细胞抗肿瘤。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#EndocrineTherapyAgent">
+  <rdfs:subClassOf rdf:resource="#AnticancerDrug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">内分泌治疗药</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">用于激素依赖性肿瘤的内分泌治疗药物。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#SupportiveCareDrug">
+  <rdfs:subClassOf rdf:resource="#Drug"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">辅助用药</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">止吐、升白、营养支持等肿瘤治疗辅助用药。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Organization">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">组织机构</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">承担药品研发、生产、监管或谈判职能的组织。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#PharmaceuticalCompany">
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">制药企业</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品的研发与生产企业，医保谈判的参与主体。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#RegulatoryAgency">
+  <rdfs:subClassOf rdf:resource="#Organization"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">监管机构</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">负责药品审批与医保目录管理的政府部门。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Disease">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">疾病</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">包括恶性肿瘤及药物引起的不良反应。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#MalignantTumor">
+  <rdfs:subClassOf rdf:resource="#Disease"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">恶性肿瘤</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">抗肿瘤药品的治疗对象，按 ICD 编码区分。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#AdverseReaction">
+  <rdfs:subClassOf rdf:resource="#Disease"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">不良反应</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">用药过程中出现的有害反应。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#NegotiationEvent">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">医保谈判</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品价格谈判或集中带量采购等价格形成事件。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#NationalDrugPriceNegotiation">
+  <rdfs:subClassOf rdf:resource="#NegotiationEvent"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家医保药品谈判</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家医保局组织的年度医保药品目录准入谈判。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#VolumeBasedProcurement">
+  <rdfs:subClassOf rdf:resource="#NegotiationEvent"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">集中带量采购</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">以量换价的国家组织药品集中带量采购。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#InsuranceListing">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">医保目录条目</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品被纳入某一版医保目录的记录，含目录版本与覆盖地区。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#PriceRecord">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">价格记录</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">某药品在特定时间点的谈判前后价格与降幅。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Region">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">地区</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">医保政策与目录的覆盖范围。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Country">
+  <rdfs:subClassOf rdf:resource="#Region"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">最高层级地区。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Province">
+  <rdfs:subClassOf rdf:resource="#Region"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">省级行政区</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">省、自治区、直辖市。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#City">
+  <rdfs:subClassOf rdf:resource="#Region"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">地级市</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">地级行政区，隶属于省级行政区。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Evidence">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">证据</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">支撑谈判决策的临床与经济学证据。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ClinicalTrial">
+  <rdfs:subClassOf rdf:resource="#Evidence"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">临床试验</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药品有效性与安全性的试验证据。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#PharmacoeconomicEvaluation">
+  <rdfs:subClassOf rdf:resource="#Evidence"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">药物经济学评价</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">成本-效果、预算影响等经济学证据。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#NegotiatedDrug">
+  <rdfs:subClassOf rdf:resource="#Drug"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Drug"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#listedIn"/>
+          <owl:someValuesFrom rdf:resource="#InsuranceListing"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">医保谈判成功药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">被定义类：凡纳入了医保目录条目的药品，推理机可自动判定其属于本类。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#FailedNegotiatedDrug">
+  <rdfs:subClassOf rdf:resource="#Drug"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#Drug"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#negotiatedIn"/>
+          <owl:someValuesFrom rdf:resource="#NationalDrugPriceNegotiation"/>
+        </owl:Restriction>
+        <owl:Class>
+          <owl:complementOf>
+            <owl:Restriction>
+              <owl:onProperty rdf:resource="#listedIn"/>
+              <owl:someValuesFrom rdf:resource="#InsuranceListing"/>
+            </owl:Restriction>
+          </owl:complementOf>
+        </owl:Class>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">谈判未成功药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">被定义类：参加过国家医保谈判但未被纳入任何目录条目的药品。</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#LungCancerDrug">
+  <rdfs:subClassOf rdf:resource="#AnticancerDrug"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#AnticancerDrug"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#indicatedFor"/>
+          <owl:someValuesFrom>
+            <owl:Class>
+              <owl:oneOf rdf:parseType="Collection">
+                <rdf:Description rdf:about="#nsclc"/>
+              </owl:oneOf>
+            </owl:Class>
+          </owl:someValuesFrom>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">肺癌治疗药品</rdfs:label>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">被定义类：适用于非小细胞肺癌的抗肿瘤药品，推理机可自动归类。</rdfs:comment>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#msd">
+  <rdf:type rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">默沙东</rdfs:label>
+  <companyType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">外资药企</companyType>
+  <foundedYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1891</foundedYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#innovent">
+  <rdf:type rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">信达生物</rdfs:label>
+  <companyType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">本土创新药企</companyType>
+  <foundedYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2011</foundedYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#astrazeneca">
+  <rdf:type rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">阿斯利康</rdfs:label>
+  <companyType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">外资药企</companyType>
+  <foundedYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1999</foundedYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#roche">
+  <rdf:type rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">罗氏</rdfs:label>
+  <companyType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">外资药企</companyType>
+  <foundedYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1896</foundedYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hengrui">
+  <rdf:type rdf:resource="#PharmaceuticalCompany"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">恒瑞医药</rdfs:label>
+  <companyType rdf:datatype="http://www.w3.org/2001/XMLSchema#string">本土药企</companyType>
+  <foundedYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1970</foundedYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#nhsa">
+  <rdf:type rdf:resource="#RegulatoryAgency"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国家医疗保障局</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#nsclc">
+  <rdf:type rdf:resource="#MalignantTumor"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">非小细胞肺癌</rdfs:label>
+  <icdCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C34.9</icdCode>
+  <fiveYearSurvivalRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.26</fiveYearSurvivalRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#breast_cancer">
+  <rdf:type rdf:resource="#MalignantTumor"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">乳腺癌</rdfs:label>
+  <icdCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C50</icdCode>
+  <fiveYearSurvivalRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.83</fiveYearSurvivalRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#crc">
+  <rdf:type rdf:resource="#MalignantTumor"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">结直肠癌</rdfs:label>
+  <icdCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C18</icdCode>
+  <fiveYearSurvivalRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.65</fiveYearSurvivalRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#hcc">
+  <rdf:type rdf:resource="#MalignantTumor"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">肝细胞癌</rdfs:label>
+  <icdCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">C22.0</icdCode>
+  <fiveYearSurvivalRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.14</fiveYearSurvivalRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ir_ae">
+  <rdf:type rdf:resource="#AdverseReaction"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">免疫相关性肺炎</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#neutropenia">
+  <rdf:type rdf:resource="#AdverseReaction"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">中性粒细胞减少症</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cinv">
+  <rdf:type rdf:resource="#AdverseReaction"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">化疗相关恶心呕吐</rdfs:label>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pembrolizumab">
+  <rdf:type rdf:resource="#ImmuneCheckpointInhibitor"/>
+  <manufacturedBy rdf:resource="#msd"/>
+  <indicatedFor rdf:resource="#nsclc"/>
+  <causesAdverseReaction rdf:resource="#ir_ae"/>
+  <combinedWith rdf:resource="#pemetrexed"/>
+  <rdf:type>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#listedIn"/>
+      <owl:maxCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">0</owl:maxCardinality>
+    </owl:Restriction>
+  </rdf:type>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">帕博利珠单抗</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">帕博利珠单抗</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">可瑞达</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">100mg/4ml</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">320000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字SJ20180019</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#sintilimab">
+  <rdf:type rdf:resource="#ImmuneCheckpointInhibitor"/>
+  <manufacturedBy rdf:resource="#innovent"/>
+  <indicatedFor rdf:resource="#nsclc"/>
+  <causesAdverseReaction rdf:resource="#ir_ae"/>
+  <listedIn rdf:resource="#list2023"/>
+  <hasPriceRecord rdf:resource="#pr_sin"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">信迪利单抗</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">信迪利单抗</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">达伯舒</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">100mg/10ml</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">98000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字S20180016</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#osimertinib">
+  <rdf:type rdf:resource="#TargetedTherapyAgent"/>
+  <manufacturedBy rdf:resource="#astrazeneca"/>
+  <indicatedFor rdf:resource="#nsclc"/>
+  <causesAdverseReaction rdf:resource="#neutropenia"/>
+  <listedIn rdf:resource="#list2023"/>
+  <hasPriceRecord rdf:resource="#pr_osi"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">奥希替尼</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">奥希替尼</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">泰瑞沙</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">片剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">80mg</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">183600.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2017</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字HJ20170150</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#trastuzumab">
+  <rdf:type rdf:resource="#TargetedTherapyAgent"/>
+  <manufacturedBy rdf:resource="#roche"/>
+  <indicatedFor rdf:resource="#breast_cancer"/>
+  <combinedWith rdf:resource="#paclitaxel_nab"/>
+  <listedIn rdf:resource="#list2023"/>
+  <hasPriceRecord rdf:resource="#pr_tras"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">曲妥珠单抗</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">曲妥珠单抗</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">赫赛汀</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">440mg</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">165000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2002</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字SJ20170046</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#bevacizumab">
+  <rdf:type rdf:resource="#TargetedTherapyAgent"/>
+  <manufacturedBy rdf:resource="#roche"/>
+  <indicatedFor rdf:resource="#crc"/>
+  <indicatedFor rdf:resource="#hcc"/>
+  <listedIn rdf:resource="#list2023"/>
+  <hasPriceRecord rdf:resource="#pr_bev"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">贝伐珠单抗</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">贝伐珠单抗</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">安维汀</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">100mg/4ml</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">120000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2010</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字SJ20100047</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pemetrexed">
+  <rdf:type rdf:resource="#ChemotherapeuticAgent"/>
+  <manufacturedBy rdf:resource="#hengrui"/>
+  <indicatedFor rdf:resource="#nsclc"/>
+  <causesAdverseReaction rdf:resource="#neutropenia"/>
+  <causesAdverseReaction rdf:resource="#cinv"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">培美曲塞</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">培美曲塞</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">力比泰</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">500mg</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">60000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2005</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字H20051288</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#paclitaxel_nab">
+  <rdf:type rdf:resource="#ChemotherapeuticAgent"/>
+  <manufacturedBy rdf:resource="#hengrui"/>
+  <indicatedFor rdf:resource="#breast_cancer"/>
+  <causesAdverseReaction rdf:resource="#neutropenia"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">白蛋白结合型紫杉醇</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">白蛋白结合型紫杉醇</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">艾越</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">100mg</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">72000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字H20183044</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#palonosetron">
+  <rdf:type rdf:resource="#SupportiveCareDrug"/>
+  <treats rdf:resource="#cinv"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">帕洛诺司琼</rdfs:label>
+  <genericName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">帕洛诺司琼</genericName>
+  <brandName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">诺威</brandName>
+  <dosageForm rdf:datatype="http://www.w3.org/2001/XMLSchema#string">注射剂</dosageForm>
+  <specification rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0.25mg</specification>
+  <annualTreatmentCost rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">6000.0</annualTreatmentCost>
+  <isDomestic rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isDomestic>
+  <launchYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2008</launchYear>
+  <approvalNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">国药准字H20080776</approvalNumber>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#neg2023">
+  <rdf:type rdf:resource="#NationalDrugPriceNegotiation"/>
+  <organizedBy rdf:resource="#nhsa"/>
+  <negotiatedDrug rdf:resource="#sintilimab"/>
+  <negotiatedDrug rdf:resource="#osimertinib"/>
+  <negotiatedDrug rdf:resource="#trastuzumab"/>
+  <negotiatedDrug rdf:resource="#bevacizumab"/>
+  <negotiatedDrug rdf:resource="#pembrolizumab"/>
+  <hasParticipant rdf:resource="#msd"/>
+  <hasParticipant rdf:resource="#innovent"/>
+  <hasParticipant rdf:resource="#astrazeneca"/>
+  <hasParticipant rdf:resource="#roche"/>
+  <supportedBy rdf:resource="#ct_keynote189"/>
+  <supportedBy rdf:resource="#ct_orient11"/>
+  <supportedBy rdf:resource="#pe_sin"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2023年国家医保药品目录谈判</rdfs:label>
+  <negotiationYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</negotiationYear>
+  <negotiationRound rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</negotiationRound>
+  <averagePriceCut rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.615</averagePriceCut>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#neg2024">
+  <rdf:type rdf:resource="#NationalDrugPriceNegotiation"/>
+  <organizedBy rdf:resource="#nhsa"/>
+  <negotiatedDrug rdf:resource="#pembrolizumab"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2024年国家医保药品目录谈判</rdfs:label>
+  <negotiationYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</negotiationYear>
+  <negotiationRound rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</negotiationRound>
+  <averagePriceCut rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.63</averagePriceCut>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#vbp5">
+  <rdf:type rdf:resource="#VolumeBasedProcurement"/>
+  <organizedBy rdf:resource="#nhsa"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">第五批国家组织药品集中带量采购</rdfs:label>
+  <negotiationYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2021</negotiationYear>
+  <averagePriceCut rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.56</averagePriceCut>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#list2023">
+  <rdf:type rdf:resource="#InsuranceListing"/>
+  <coversRegion rdf:resource="#china"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2023年版国家医保药品目录</rdfs:label>
+  <catalogVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2023年版</catalogVersion>
+  <effectiveDate rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2023-03-01</effectiveDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#list2024">
+  <rdf:type rdf:resource="#InsuranceListing"/>
+  <coversRegion rdf:resource="#china"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2024年版国家医保药品目录</rdfs:label>
+  <catalogVersion rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2024年版</catalogVersion>
+  <effectiveDate rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2024-01-01</effectiveDate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pr_osi">
+  <rdf:type rdf:resource="#PriceRecord"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">奥希替尼2017年谈判价格记录</rdfs:label>
+  <priceBefore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">51000.0</priceBefore>
+  <priceAfter rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15300.0</priceAfter>
+  <priceCutRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.7</priceCutRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pr_sin">
+  <rdf:type rdf:resource="#PriceRecord"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">信迪利单抗2019年谈判价格记录</rdfs:label>
+  <priceBefore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7838.0</priceBefore>
+  <priceAfter rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2843.0</priceAfter>
+  <priceCutRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.637</priceCutRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pr_tras">
+  <rdf:type rdf:resource="#PriceRecord"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">曲妥珠单抗2017年谈判价格记录</rdfs:label>
+  <priceBefore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">24500.0</priceBefore>
+  <priceAfter rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">7600.0</priceAfter>
+  <priceCutRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.69</priceCutRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pr_bev">
+  <rdf:type rdf:resource="#PriceRecord"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">贝伐珠单抗2017年谈判价格记录</rdfs:label>
+  <priceBefore rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">5210.0</priceBefore>
+  <priceAfter rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1998.0</priceAfter>
+  <priceCutRate rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.616</priceCutRate>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ct_keynote189">
+  <rdf:type rdf:resource="#ClinicalTrial"/>
+  <evaluates rdf:resource="#pembrolizumab"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">KEYNOTE-189 临床试验</rdfs:label>
+  <evidenceLevel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1a</evidenceLevel>
+  <publishYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2018</publishYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#ct_orient11">
+  <rdf:type rdf:resource="#ClinicalTrial"/>
+  <evaluates rdf:resource="#sintilimab"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ORIENT-11 临床试验</rdfs:label>
+  <evidenceLevel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1b</evidenceLevel>
+  <publishYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2020</publishYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#pe_sin">
+  <rdf:type rdf:resource="#PharmacoeconomicEvaluation"/>
+  <evaluates rdf:resource="#sintilimab"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">信迪利单抗药物经济学评价</rdfs:label>
+  <evidenceLevel rdf:datatype="http://www.w3.org/2001/XMLSchema#string">模型研究</evidenceLevel>
+  <publishYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2023</publishYear>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#china">
+  <rdf:type rdf:resource="#Country"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">中国</rdfs:label>
+  <adminCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">100000</adminCode>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#guangdong">
+  <rdf:type rdf:resource="#Province"/>
+  <partOfRegion rdf:resource="#china"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">广东省</rdfs:label>
+  <adminCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">440000</adminCode>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#guangzhou">
+  <rdf:type rdf:resource="#City"/>
+  <partOfRegion rdf:resource="#guangdong"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">广州市</rdfs:label>
+  <adminCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">440100</adminCode>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#beijing">
+  <rdf:type rdf:resource="#City"/>
+  <partOfRegion rdf:resource="#china"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">北京市</rdfs:label>
+  <adminCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">110000</adminCode>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#shanghai">
+  <rdf:type rdf:resource="#City"/>
+  <partOfRegion rdf:resource="#china"/>
+  <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">上海市</rdfs:label>
+  <adminCode rdf:datatype="http://www.w3.org/2001/XMLSchema#string">310000</adminCode>
+</owl:NamedIndividual>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Country"/>
+    <rdf:Description rdf:about="#Province"/>
+    <rdf:Description rdf:about="#City"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#ChemotherapeuticAgent"/>
+    <rdf:Description rdf:about="#TargetedTherapyAgent"/>
+    <rdf:Description rdf:about="#ImmuneCheckpointInhibitor"/>
+    <rdf:Description rdf:about="#EndocrineTherapyAgent"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+<owl:AllDisjointClasses>
+  <owl:members rdf:parseType="Collection">
+    <rdf:Description rdf:about="#Drug"/>
+    <rdf:Description rdf:about="#Organization"/>
+    <rdf:Description rdf:about="#Disease"/>
+    <rdf:Description rdf:about="#NegotiationEvent"/>
+    <rdf:Description rdf:about="#InsuranceListing"/>
+    <rdf:Description rdf:about="#PriceRecord"/>
+    <rdf:Description rdf:about="#Region"/>
+    <rdf:Description rdf:about="#Evidence"/>
+  </owl:members>
+</owl:AllDisjointClasses>
+
+
+</rdf:RDF>
