@@ -95,7 +95,7 @@ python results/run_reasoner.py    # 需要 Java 17 + owlready2（内置 HermiT�
 ### 4.3 导入 Neo4j 并查询
 
 ```bash
-# 启动（密码 Neo4j@2026）
+# 启动
 neo4j.bat console
 
 # 建图
@@ -118,4 +118,4 @@ cypher-shell -a bolt://localhost:7687 -u neo4j -p Neo4j@2026 -f neo4j/queries.cy
 
 ## 六、数据说明
 
-实例数据（药品价格、谈判年份、降幅等）为**公开报道量级的教学示例**，用于演示本体与图谱的建模方法，不作为官方统计口径引用。
+实例数据（药品价格、谈判年份、降幅等）为**公开报道量级的教学示例**。
